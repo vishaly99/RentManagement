@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>        
         <ui:include src = "components/css.xhtml" />
     </h:head>
@@ -33,7 +35,9 @@
                                             <h:inputText id="propertytype" value="#{adminBean.propertyname}" label="propertytype"          
                                                  alt="propertytype" autocomplete="off" readonly="false" required="true"              
                                                 requiredMessage="propertytype is required"  accesskey="q" styleClass="form-control">  
-                                            </h:inputText>  
+                                            <f:validateRegex pattern="^([a-zA-Z]+(.)?[\s]*)$" />
+                                            </h:inputText>
+                                            <p:message for="propertytype" style="font-size: 15px;"/>
                                         </div>
                                         
                                     </div>
