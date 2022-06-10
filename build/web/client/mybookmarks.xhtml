@@ -66,16 +66,22 @@
                         <h:dataTable styleClass="manage-table bookmarks-table responsive-table" value="#{clientBean.showwishdata()}" var="s">
                         <f:facet name="header"><i class="fa fa-file-text"></i> Property</f:facet>  
                         <h:column class="title-container">
-                            <img src="images/listing-05.jpg" alt=""/>  
+                            <img src="images/#{clientBean.showimage(s.propertyId.propertyId)}" alt=""/>
+<!--                           <h:dataTable value="#{clientBean.showimage(s.propertyId.propertyId)}" var="image">
+                               <h:column>
+                                   <img src="images/#{image.image}" alt=""/></h:column>
+                            </h:dataTable>-->
                                         <div class="title">
                                             <h4><a href="#">#{s.propertyId.propertyName}</a></h4>
                                             <span>#{s.propertyId.description}</span>
                                             <span class="table-property-price">#{s.propertyId.price}</span>
                                             
-                                        </div> 
+                                        </div>
+
                         </h:column>
                         <h:column class="action"> 
-                            <a href="#" class="delete"><i class="fa fa-remove"></i> Remove</a>  
+                            <a href="#" class="delete"><i class="fa fa-remove"></i> Remove</a>
+                            <a href="#{clientBean.showpropertybyid(s.propertyId.propertyId)}" class="delete"><i class="fa fa-book"></i> Details</a>
                         </h:column>
                         </h:dataTable>
                     </div>

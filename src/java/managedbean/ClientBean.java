@@ -9,6 +9,7 @@ import client.JerseyClient;
 import ejb.DataModelLocal;
 import entity.Amenitiestb;
 import entity.Featurestb;
+import entity.Propertyimagetb;
 import entity.Propertytb;
 import entity.Propertytypetb;
 import entity.Sellertb;
@@ -65,13 +66,15 @@ public class ClientBean {
     GenericType<Collection<Propertytypetb>> gcPropertytype;
     
     Collection<Wishlisttb> getwishlisttb;
-    
+    Collection<Propertyimagetb> getPropertyimagetbs;
+    Collection<Propertytb> getPropertytbs;
     Usertb usertb=new Usertb();
     Featurestb featurestb=new Featurestb();
     Wishlisttb wishlisttb=new Wishlisttb();
     Propertytypetb propertytypetb=new Propertytypetb();
     Sellertb sellertb=new Sellertb();
     Propertytb propertytb=new Propertytb();
+    Propertyimagetb propertyimagetb=new Propertyimagetb();
     /**
      * Creates a new instance of ClientBean
      */
@@ -100,6 +103,14 @@ public class ClientBean {
         this.selectedItems = selectedItems;
     }
 
+    public Collection<Propertyimagetb> getGetPropertyimagetbs() {
+        return getPropertyimagetbs;
+    }
+
+    public void setGetPropertyimagetbs(Collection<Propertyimagetb> getPropertyimagetbs) {
+        this.getPropertyimagetbs = getPropertyimagetbs;
+    }
+
     public Collection<Amenitiestb> getGetAmenities() {
         return getAmenities;
     }
@@ -122,6 +133,30 @@ public class ClientBean {
 
     public Integer getAmenitiesid() {
         return amenitiesid;
+    }
+
+    public Integer getPropertyid() {
+        return propertyid;
+    }
+
+    public void setPropertyid(Integer propertyid) {
+        this.propertyid = propertyid;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPropertyname() {
+        return propertyname;
+    }
+
+    public void setPropertyname(String propertyname) {
+        this.propertyname = propertyname;
     }
 
     public void setAmenitiesid(Integer amenitiesid) {
@@ -412,6 +447,7 @@ public class ClientBean {
                     HttpSession session = SessionUtils.getSession();
                     session.setAttribute("username", username);
                     session.setAttribute("isSeller",usertb.getIsSeller());
+                    session.setAttribute("UserId",usertb.getUserId());
                     this.auth=true;
                     this.isseller=usertb.getIsSeller();
                     userid=usertb.getUserId();
@@ -425,6 +461,7 @@ public class ClientBean {
                     HttpSession session = SessionUtils.getSession();
                     session.setAttribute("username", username);
                     session.setAttribute("isSeller",usertb.getIsSeller());
+                    session.setAttribute("UserId",usertb.getUserId());
                     this.auth=true;
                     this.isseller=usertb.getIsSeller();
                     userid=usertb.getUserId();
@@ -574,14 +611,59 @@ public class ClientBean {
             System.out.println("Error:="+e.getMessage());
         }
     }
-    
-    
+    public String showimage(int i)
+    {
+        String img=null;
+        System.out.println("Showimage:="+i);
+        getPropertyimagetbs=ejb.searchImageList(i);
+        for (Propertyimagetb propertyimagetb : getPropertyimagetbs) {
+                System.out.println("a"+propertyimagetb.getImage());
+                img=propertyimagetb.getImage();
+                break;
+            }
+        
+        return img;
+    }
+    public String showpropertybyid(int i)
+    {
+        System.out.println("showpropertybyid:="+i);
+        propertytb=ejb.searchProperty(i);
+        sellertb=ejb.searchSeller(propertytb.getPropertyId());
+        getPropertyimagetbs=ejb.searchImageList(propertytb.getPropertyId());
+        propertyname=propertytb.getPropertyName();
+        type=sellertb.getType();
+        address=sellertb.getAddress();
+        price=propertytb.getPrice();
+        areaunit=propertytb.getAreaUnit();
+        decription=propertytb.getDescription();
+        this.username=sellertb.getUserId().getUserName();
+        this.mobileno=sellertb.getUserId().getMobileNo();
+        this.email=sellertb.getUserId().getEmail();
+        System.out.println("Seller details:="+username+""+mobileno+""+email);
+        for (Propertyimagetb image : getPropertyimagetbs) {
+            System.out.println("images:="+image.getImage());
+        }
+        //return null;
+//        System.out.println("propertyid:="+propertytb.getPropertyId());
+//        System.out.println("sellerid:="+sellertb.getSellerId());
+        return "SinglePropertySeller.xhtml";
+    }
+    public String myprofile()
+    {
+        
+        HttpSession session = SessionUtils.getSession();
+        Integer UserId=(Integer)session.getAttribute("UserId");
+        System.out.println("managedbean.ClientBean.myprofile():="+UserId);
+       
+        return "myprofile.xhtml";
+    }
     public void clearAll()
     {
         userid=0;isseller=0;propertytypeid=0;featureid=0;amenitiesid=0;amenities="";
         propertyid=0;price=0;
         address="";decription="";
         propertyname="";type="";
+        ptype="";
         username="";email="";password="";mobileno="";feature="";title="";
         auth=false;
     }

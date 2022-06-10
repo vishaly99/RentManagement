@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Propertyimagetb.findAll", query = "SELECT p FROM Propertyimagetb p"),
-    @NamedQuery(name = "Propertyimagetb.findByImageId", query = "SELECT p FROM Propertyimagetb p WHERE p.imageId = :imageId"),
+    @NamedQuery(name = "Propertyimagetb.findByImageId", query = "SELECT p FROM Propertyimagetb p WHERE p.propertyId = :propertyId"),
     @NamedQuery(name = "Propertyimagetb.findByImage", query = "SELECT p FROM Propertyimagetb p WHERE p.image = :image"),
     @NamedQuery(name = "Propertyimagetb.findByIsActive", query = "SELECT p FROM Propertyimagetb p WHERE p.isActive = :isActive"),
     @NamedQuery(name = "Propertyimagetb.findByCreateDate", query = "SELECT p FROM Propertyimagetb p WHERE p.createDate = :createDate"),

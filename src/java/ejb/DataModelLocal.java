@@ -8,7 +8,10 @@ package ejb;
 import entity.Amenitiestb;
 import entity.Citytb;
 import entity.Featurestb;
+import entity.Propertyimagetb;
+import entity.Propertytb;
 import entity.Propertytypetb;
+import entity.Sellertb;
 import entity.Statetb;
 import entity.Usertb;
 import entity.Wishlisttb;
@@ -50,6 +53,7 @@ public interface DataModelLocal {
     Collection<Usertb> getAllUsertbs();
     
     Collection<Usertb> getAllSeller();
+    public Sellertb searchSeller(int Id);
     public String addUser(String UserName,String Email,String Password,String MobileNo,Integer IsSeller);
     public String updateUser(Integer UserId,String UserName,String Email,String MobileNo);
     public String removeUser(Integer UserId);
@@ -65,4 +69,8 @@ public interface DataModelLocal {
     public Featurestb searchFeatures(Integer FeatureId);
     //==== WishList=========
     public Collection<Wishlisttb> searchWishList(Usertb UserId);
+    //==== Property Image=========
+    public Collection<Propertyimagetb> searchImageList(int Id);
+    //==== Property=========
+    public Propertytb searchProperty(int Id);
 }

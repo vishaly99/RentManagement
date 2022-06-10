@@ -9,7 +9,10 @@ import entity.Amenitiestb;
 import entity.Citytb;
 import entity.Featurestb;
 import entity.Grouptb;
+import entity.Propertyimagetb;
+import entity.Propertytb;
 import entity.Propertytypetb;
+import entity.Sellertb;
 import entity.Statetb;
 import entity.Usergrouptb;
 import entity.Usertb;
@@ -509,5 +512,37 @@ public class DataModel implements DataModelLocal {
 
             return em.createNamedQuery("Wishlisttb.findAllByUserId").setParameter("userId",UserId).getResultList();
         
+    }
+
+    @Override
+    public Collection<Propertyimagetb> searchImageList(int Id) {
+       
+            System.out.println("Id:="+Id);
+            Propertyimagetb propertyimage=(Propertyimagetb)em.find(Propertyimagetb.class, Id);
+            Collection<Propertyimagetb> p= em.createNamedQuery("Propertyimagetb.findByImageId").setParameter("propertyId",propertyimage.getPropertyId()).getResultList();    
+            for (Propertyimagetb propertyimagetb : p) {
+                System.out.println("image:="+propertyimagetb.getImage());
+            }
+        return p;
+    }
+
+    @Override
+    public Propertytb searchProperty(int Id) {
+        try{
+            Propertytb propertytb=em.find(Propertytb.class,Id);
+            return propertytb;
+        }catch(Exception e){
+            return null;
+        }   
+    }
+
+    @Override
+    public Sellertb searchSeller(int Id) {
+        try{
+            Sellertb sellertb=em.find(Sellertb.class,Id);
+            return sellertb;
+        }catch(Exception e){
+            return null;
+        }  
     }
 }
